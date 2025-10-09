@@ -1,0 +1,33 @@
+Переходим в папку с программой
+cd "C:\Users\user\Desktop\Мусор\2 курс\крипта\crypto_tool"
+
+Проверка размера исходного файла
+Get-Item "C:\Users\user\Desktop\Текст для шифрования.txt" | Select-Object Name, Length
+
+Шифрование файла 
+python crypto_tool.py -e -i "C:\Users\user\Desktop\Текст для шифрования.txt" -o "C:\Users\user\Desktop\Текст для шифрования.enc" -p "мой_пароль" -v
+
+Проверка размера зашифрованного файла
+Get-Item "C:\Users\user\Desktop\Текст для шифрования.enc" | Select-Object Name, Length
+
+ Дешифрование файла
+python crypto_tool.py -d -i "C:\Users\user\Desktop\Текст для шифрования.enc" -o "C:\Users\user\Desktop\Текст для шифрования_decrypted.txt" -p "мой_пароль" -v
+
+Проверка размера расшифрованного файла
+Get-Item "C:\Users\user\Desktop\Текст для шифрования_decrypted.txt" | Select-Object Name, Length
+
+Проверка целостности данных
+Сравнение исходного и расшифрованного файлов
+fc "C:\Users\user\Desktop\Текст для шифрования.txt" "C:\Users\user\Desktop\Текст для шифрования_decrypted.txt"
+
+"C:\Users\user\Desktop\Текст для шифрования_decrypted.txt"
+python crypto_tool.py -e -i "C:\Users\user\Desktop\Текст для шифрования.txt" -o "C:\Users\user\Desktop\Текст для шифрования_decrypted.txt" -p "мой_пароль" -v
+
+Сравнение файлов
+$file1 = Get-Content "C:\Users\user\Desktop\Текст для шифрования.txt" -Raw
+$file2 = Get-Content "C:\Users\user\Desktop\Текст для шифрования_decrypted.txt" -Raw
+if ($file1 -eq $file2) {
+    Write-Host "Файлы идентичны!" -ForegroundColor Green
+} else {
+    Write-Host "Файлы различаются!" -ForegroundColor Red
+}
